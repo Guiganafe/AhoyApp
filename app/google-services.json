@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1047700311502",
+    "firebase_url": "https://ahoy-45c37.firebaseio.com",
+    "project_id": "ahoy-45c37",
+    "storage_bucket": "ahoy-45c37.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1047700311502:android:57ad9f45c402dc3c",
+        "android_client_info": {
+          "package_name": "com.guiganafe.ahoy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1047700311502-6h7le67j6nerstv1lpparcuucq6s19es.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.guiganafe.ahoy",
+            "certificate_hash": "f2822a03e38b75df78bf7a52118cf64ed30a91e2"
+          }
+        },
+        {
+          "client_id": "1047700311502-1tk8nc4c4p34406vf0iq0pnk6sufa0h6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsouBwa16UYzZjBLR-rW2JwZqkitSUPB4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1047700311502-1tk8nc4c4p34406vf0iq0pnk6sufa0h6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
