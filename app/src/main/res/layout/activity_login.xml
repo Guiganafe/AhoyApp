@@ -95,4 +95,16 @@
         android:textColor="@color/colorPrimary"
         android:textStyle="bold" />
 
+    <Button
+        android:id="@+id/phone_login_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/login_phone"
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="17dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="Login com o celular"
+        android:textColor="#FFF" />
+
 </RelativeLayout>

@@ -13,8 +13,11 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
@@ -45,6 +48,8 @@ public class SettingsActivity extends AppCompatActivity {
                 UpdateSettings();
             }
         });
+
+        RetrieveUserInfo();
     }
 
     private void UpdateSettings() {
@@ -63,21 +68,53 @@ public class SettingsActivity extends AppCompatActivity {
             profileMap.put("name", setUserName);
             profileMap.put("status", setUserStatus);
             rootRef.child("Users").child(currentUserId).setValue(profileMap)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                SendUserToMainActivity();
-                                Toast.makeText(SettingsActivity.this, "Perfil atualizado com sucesso", Toast.LENGTH_SHORT);
-                            }
-                            else{
-                                String message = task.getException().toString();
-                                Toast.makeText(SettingsActivity.this, "Error: " + message, Toast.LENGTH_SHORT);
-                            }
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            SendUserToMainActivity();
+                            Toast.makeText(SettingsActivity.this, "Perfil atualizado com sucesso", Toast.LENGTH_SHORT);
                         }
-                    });
+                        else{
+                            String message = task.getException().toString();
+                            Toast.makeText(SettingsActivity.this, "Error: " + message, Toast.LENGTH_SHORT);
+                        }
+                    }
+                });
         }
 
+    }
+
+    private void RetrieveUserInfo(){
+        rootRef.child("Users").child(currentUserId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if((dataSnapshot.exists()) && (dataSnapshot.hasChild("name") && (dataSnapshot.hasChild("image")))){
+                    String retrieveUserName = dataSnapshot.child("name").getValue().toString();
+                    String retrieveUserStatus = dataSnapshot.child("status").getValue().toString();
+                    String retrieveUserProfileImage = dataSnapshot.child("image").getValue().toString();
+
+                    userName.setText(retrieveUserName);
+                    userStatus.setText(retrieveUserStatus);
+
+
+                }
+                else if((dataSnapshot.exists()) && (dataSnapshot.hasChild("name"))){
+                    String retrieveUserName = dataSnapshot.child("name").getValue().toString();
+                    String retrieveUserStatus = dataSnapshot.child("status").getValue().toString();
+
+                    userName.setText(retrieveUserName);
+                    userStatus.setText(retrieveUserStatus);
+                }else{
+                    Toast.makeText(SettingsActivity.this, "Por favor, atualize suas informações de perfil.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void SendUserToMainActivity() {

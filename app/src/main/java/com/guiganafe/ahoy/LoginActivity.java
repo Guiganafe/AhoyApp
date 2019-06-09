@@ -21,7 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseUser currentUser;
-    private Button loginButton;
+    private Button loginButton, phoneLoginButton;
     private EditText userEmail, userPassword;
     private TextView needNewAccountLink, forgetPassword, phoneLogin;
     private FirebaseAuth mAuth;
@@ -47,6 +47,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 AllowUserToLogin();
+            }
+        });
+
+        phoneLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent phoneLoginActivity = new Intent(LoginActivity.this, PhoneLoginActivity.class);
+                startActivity(phoneLoginActivity);
             }
         });
     }
@@ -87,6 +95,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void InitializeFields() {
         loginButton = (Button) findViewById(R.id.login_button);
+        phoneLoginButton = (Button) findViewById(R.id.phone_login_button);
         userEmail = (EditText)findViewById(R.id.login_email);
         userPassword = (EditText)findViewById(R.id.login_password);
         needNewAccountLink = (TextView) findViewById(R.id.need_new__account_link);
