@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -47,7 +48,7 @@ public class ChatActivity extends AppCompatActivity
     private FirebaseAuth mAuth;
     private DatabaseReference RootRef;
 
-    private ImageButton SendMessageButton, SendFilesButton;
+    private ImageButton SendMessageButton;
     private EditText MessageInputText;
 
     private final List<Messages> messagesList = new ArrayList<>();
@@ -66,7 +67,6 @@ public class ChatActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-
         mAuth = FirebaseAuth.getInstance();
         messageSenderID = mAuth.getCurrentUser().getUid();
         RootRef = FirebaseDatabase.getInstance().getReference();
@@ -76,9 +76,7 @@ public class ChatActivity extends AppCompatActivity
         messageReceiverName = getIntent().getExtras().get("visit_user_name").toString();
         messageReceiverImage = getIntent().getExtras().get("visit_image").toString();
 
-
         IntializeControllers();
-
 
         userName.setText(messageReceiverName);
         Picasso.get().load(messageReceiverImage).placeholder(R.drawable.perfil).into(userImage);
@@ -91,7 +89,6 @@ public class ChatActivity extends AppCompatActivity
                 SendMessage();
             }
         });
-
 
         DisplayLastSeen();
     }
@@ -117,7 +114,6 @@ public class ChatActivity extends AppCompatActivity
         userImage = (CircleImageView) findViewById(R.id.custom_profile_image);
 
         SendMessageButton = (ImageButton) findViewById(R.id.send_message_btn);
-        SendFilesButton = (ImageButton) findViewById(R.id.send_files_btn);
         MessageInputText = (EditText) findViewById(R.id.input_message);
 
         messageAdapter = new MessageAdapter(messagesList);
@@ -129,10 +125,10 @@ public class ChatActivity extends AppCompatActivity
 
         Calendar calendar = Calendar.getInstance();
 
-        SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd, yyyy");
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd-MM-yyy");
         saveCurrentDate = currentDate.format(calendar.getTime());
 
-        SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm a");
+        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss");
         saveCurrentTime = currentTime.format(calendar.getTime());
     }
 
@@ -157,7 +153,7 @@ public class ChatActivity extends AppCompatActivity
                             }
                             else if (state.equals("offline"))
                             {
-                                userLastSeen.setText("Last Seen: " + date + " " + time);
+                                userLastSeen.setText("Visto por último: " + date + " " + time);
                             }
                         }
                         else
@@ -215,15 +211,16 @@ public class ChatActivity extends AppCompatActivity
                 });
     }
 
-
-
+    /**
+     * Envia a mensagem
+     */
     private void SendMessage()
     {
         String messageText = MessageInputText.getText().toString();
 
         if (TextUtils.isEmpty(messageText))
         {
-            Toast.makeText(this, "first write your message...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Digite a mensagem...", Toast.LENGTH_SHORT).show();
         }
         else
         {
@@ -254,11 +251,11 @@ public class ChatActivity extends AppCompatActivity
                 {
                     if (task.isSuccessful())
                     {
-                        Toast.makeText(ChatActivity.this, "Message Sent Successfully...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ChatActivity.this, "Messagem enviada com sucesso...", Toast.LENGTH_SHORT).show();
                     }
                     else
                     {
-                        Toast.makeText(ChatActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ChatActivity.this, "Erro", Toast.LENGTH_SHORT).show();
                     }
                     MessageInputText.setText("");
                 }

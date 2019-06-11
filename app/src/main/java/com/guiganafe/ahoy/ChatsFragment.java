@@ -114,7 +114,7 @@ public class ChatsFragment extends Fragment
                                         }
                                         else if (state.equals("offline"))
                                         {
-                                            holder.userStatus.setText("Last Seen: " + date + " " + time);
+                                            holder.userStatus.setText("Visto por último: " + date + " " + time);
                                         }
                                     }
                                     else

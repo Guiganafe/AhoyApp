@@ -40,14 +40,6 @@
                     android:textStyle="bold"
                     />
 
-                <ImageView
-                    android:id="@+id/user_online_status"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/online"
-                    android:visibility="invisible"/>
-
             </LinearLayout>
 
 
@@ -60,7 +52,12 @@
                 android:textAlignment="textStart"
                 android:textSize="16sp"
                 />
-
+            <ImageView
+                android:id="@+id/user_online_status"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/online"
+                android:visibility="visible" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -75,7 +72,7 @@
                     android:text="Aceitar"
                     android:textSize="16sp"
                     android:textAllCaps="false"
-                    android:background="@android:color/holo_green_light"
+                    android:background="@drawable/button_shape"
                     android:visibility="invisible"
                     />
 
@@ -87,7 +84,7 @@
                     android:layout_marginStart="10dp"
                     android:textSize="16sp"
                     android:textAllCaps="false"
-                    android:background="@android:color/holo_red_dark"
+                    android:background="@drawable/edittext_shape"
                     android:textColor="@android:color/background_light"
                     android:visibility="invisible"
                     />

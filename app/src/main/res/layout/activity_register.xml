@@ -6,8 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".RegisterActivity">
 
+    <ImageView
+        android:id="@+id/login_logo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/login_logo_img" />
+
     <EditText
         android:id="@+id/register_email"
+        android:layout_below="@id/login_logo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -16,7 +26,12 @@
         android:layout_marginTop="30dp"
         android:hint="E-mail"
         android:inputType="textEmailAddress"
-        android:padding="7dp" />
+        android:padding="7dp"
+        android:background="@drawable/edittext_shape"
+        android:textAlignment="center"
+        android:textColor="#36C9D2"
+        android:textColorHint="#36C9D2"
+        android:textColorLink="#36C9D2"/>
 
     <EditText
         android:id="@+id/register_password"
@@ -29,17 +44,23 @@
         android:layout_marginTop="10dp"
         android:hint="Senha"
         android:inputType="textPassword"
-        android:padding="7dp" />
+        android:padding="7dp"
+        android:background="@drawable/edittext_shape"
+        android:textAlignment="center"
+        android:textColor="#36C9D2"
+        android:textColorHint="#36C9D2"
+        android:textColorLink="#36C9D2"/>
 
     <Button
         android:id="@+id/register_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_width="170dp"
+        android:layout_height="45dp"
         android:layout_below="@id/register_password"
         android:layout_marginLeft="17dp"
         android:layout_marginRight="17dp"
         android:layout_marginTop="20dp"
-        android:background="@color/colorPrimaryDark"
+        android:background="@drawable/button_shape"
         android:text="Criar conta"
         android:textColor="#FFF" />
 
@@ -54,7 +75,7 @@
         android:layout_marginTop="10dp"
         android:text="Já tem uma conta? Entre aqui"
         android:textAlignment="center"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="#36C9D2"
         android:textStyle="bold" />
 
 </RelativeLayout>

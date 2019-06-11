@@ -100,7 +100,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                             if(request_type.equals("sent")){
                                 current_state = "request_sent";
-                                sendMessageRequestButton.setText("Cancelar mensagem");
+                                sendMessageRequestButton.setText("Cancelar pedido de chat");
                             }else if(request_type.equals("received")){
                                 current_state = "request_received";
                                 sendMessageRequestButton.setText("Aceitar pedido de chat");
@@ -123,7 +123,7 @@ public class ProfileActivity extends AppCompatActivity {
                                         public void onDataChange(DataSnapshot dataSnapshot) {
                                             if(dataSnapshot.hasChild(receiverUserId)){
                                                 current_state= "friends";
-                                                sendMessageRequestButton.setText("Remover Contato");
+                                                sendMessageRequestButton.setText("Remover contato");
                                             }
                                         }
 
@@ -184,7 +184,7 @@ public class ProfileActivity extends AppCompatActivity {
                             if(task.isSuccessful()){
                                 sendMessageRequestButton.setEnabled(true);
                                 current_state = "new";
-                                sendMessageRequestButton.setText("Enviar Mensagem");
+                                sendMessageRequestButton.setText("Enviar pedido de chat");
 
                                 declineMessageRequestButton.setVisibility(View.INVISIBLE);
                                 declineMessageRequestButton.setEnabled(false);
@@ -253,7 +253,7 @@ public class ProfileActivity extends AppCompatActivity {
                             if(task.isSuccessful()){
                                 sendMessageRequestButton.setEnabled(true);
                                 current_state = "new";
-                                sendMessageRequestButton.setText("Enviar Mensagem");
+                                sendMessageRequestButton.setText("Enviar pedido de chat");
 
                                 declineMessageRequestButton.setVisibility(View.INVISIBLE);
                                 declineMessageRequestButton.setEnabled(false);
@@ -289,7 +289,7 @@ public class ProfileActivity extends AppCompatActivity {
                                                         if(task.isSuccessful()){
                                                             sendMessageRequestButton.setEnabled(true);
                                                             current_state = "request_sent";
-                                                            sendMessageRequestButton.setText("Cancelar mensagem");
+                                                            sendMessageRequestButton.setText("Cancelar pedido de chat ");
                                                         }
                                                     }
                                                 });

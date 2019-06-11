@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout myTabLayout;
     private TabsAccessorAdapter myTabsAccessorAdapter;
 
-    private FirebaseUser currentUser;
     private FirebaseAuth mAuth;
     private DatabaseReference RootRef;
     private String currentUserId;
@@ -47,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();
         RootRef = FirebaseDatabase.getInstance().getReference();
 
         mToolbar = (Toolbar) findViewById(R.id.main_page_toolbar);
@@ -63,9 +61,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * o usuário startou a atividade
+     */
     @Override
     protected void onStart() {
         super.onStart();
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
 
         if(currentUser == null){
             SendUserToLoginActivity();
@@ -76,17 +79,27 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * o usuário pausou o aplicativo
+     */
     @Override
     protected void onStop() {
         super.onStop();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
         if(currentUser != null){
             updateUserStatus("offline");
         }
     }
 
+    /**
+     * o usuário fechou o aplicativo
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
         if(currentUser != null){
             updateUserStatus("offline");
         }
@@ -113,13 +126,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void SendUserToLoginActivity() {
-        Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
-        loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(loginIntent);
-        finish();
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -133,17 +139,33 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
 
+        /**
+         * o usuário saiu do aplicativo
+         */
         if(item.getItemId() == R.id.main_logout_option){
+            updateUserStatus("offline");
             mAuth.signOut();
             SendUserToLoginActivity();
         }
+        /**
+         * o usuário quer ir para as configurações
+         */
         if(item.getItemId() == R.id.main_settings_option){
+            updateUserStatus("online");
             SendUserToSettingsActivity();
         }
+        /**
+         * O usuário quer econtrar os seus amigos
+         */
         if(item.getItemId() == R.id.main_find_friends_option){
+            updateUserStatus("online");
             SendUserToFindFriendActivity();
         }
+        /**
+         * O usuário deseja criar um novo grupo
+         */
         if(item.getItemId() == R.id.main_create_group_option){
+            updateUserStatus("online");
             RequestNewGroup();
         }
         return true;
@@ -154,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setTitle("Insira o nome do grupo: ");
 
         final EditText groupNameField = new EditText(MainActivity.this);
-        groupNameField.setHint("ex. FRIEND-ZONE");
+        groupNameField.setHint("ex. Meu grupo");
         builder.setView(groupNameField);
 
         builder.setPositiveButton("Criar", new DialogInterface.OnClickListener() {
@@ -192,25 +214,18 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-
-    private void SendUserToSettingsActivity() {
-        Intent settingIntent = new Intent(MainActivity.this, SettingsActivity.class);
-        startActivity(settingIntent);
-    }
-
-    private void SendUserToFindFriendActivity() {
-        Intent friendIntent = new Intent(MainActivity.this, FindFriendsActivity.class);
-        startActivity(friendIntent);
-    }
-
+    /**
+     * Atualiza o status do usuário
+     * @param state
+     */
     private void updateUserStatus(String state){
         String saveCurrentTime, saveCurrentDate;
         Calendar calendar = Calendar.getInstance();
 
-        SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd, yyyy");
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd-MM-yyyy");
         saveCurrentDate = currentDate.format(calendar.getTime());
 
-        SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm a");
+        SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm aaa");
         saveCurrentTime = currentTime.format(calendar.getTime());
 
         HashMap<String, Object> onlineStateMap = new HashMap<>();
@@ -222,5 +237,31 @@ public class MainActivity extends AppCompatActivity {
 
         RootRef.child("Users").child(currentUserId).child("userState")
                 .updateChildren(onlineStateMap);
+    }
+
+    /**
+     * Envia o usuário para a tela de configurações
+     */
+    private void SendUserToSettingsActivity() {
+        Intent settingIntent = new Intent(MainActivity.this, SettingsActivity.class);
+        startActivity(settingIntent);
+    }
+
+    /**
+     * Envia o usuário para a tela de encontrar amigos
+     */
+    private void SendUserToFindFriendActivity() {
+        Intent friendIntent = new Intent(MainActivity.this, FindFriendsActivity.class);
+        startActivity(friendIntent);
+    }
+
+    /**
+     * Envia o usuário para a tela de Login
+     */
+    private void SendUserToLoginActivity() {
+        Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+        loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(loginIntent);
+        finish();
     }
 }

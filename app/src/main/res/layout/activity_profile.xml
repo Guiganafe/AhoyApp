@@ -8,12 +8,14 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/visit_profile_image"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="80dp"
         android:src="@drawable/perfil"
+        app:civ_border_width="5dp"
+        app:civ_border_color="@color/colorPrimary"
         />
 
     <TextView
@@ -27,7 +29,7 @@
         android:layout_marginTop="5dp"
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:textSize="18sp"
+        android:textSize="22sp"
         android:textStyle="bold"
         />
 
@@ -43,7 +45,7 @@
         android:layout_marginTop="25dp"
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:textSize="25sp"
+        android:textSize="23sp"
         android:textStyle="bold"
         />
 
@@ -57,10 +59,10 @@
         android:layout_marginLeft="65dp"
         android:layout_marginRight="65dp"
         android:textColor="@android:color/background_light"
-        android:background="@drawable/buttons"
+        android:background="@drawable/button_shape"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:text="Enviar mensagem"
+        android:text="Enviar pedido de chat"
         android:textAllCaps="false"
         />
 
@@ -74,12 +76,12 @@
         android:layout_marginLeft="65dp"
         android:layout_marginRight="65dp"
         android:textColor="@android:color/background_light"
-        android:background="@drawable/buttons"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:text="Cancelar pedido de mensagem"
+        android:text="Cancelar pedido de chat"
         android:textAllCaps="false"
         android:visibility="invisible"
+        android:background="@drawable/button_shape"
         />
 
 </RelativeLayout>
