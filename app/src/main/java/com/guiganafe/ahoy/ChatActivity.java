@@ -50,10 +50,10 @@ public class ChatActivity extends AppCompatActivity
     private ImageButton SendMessageButton, SendFilesButton;
     private EditText MessageInputText;
 
-//    private final List<Messages> messagesList = new ArrayList<>();
-//    private LinearLayoutManager linearLayoutManager;
-//    private MessageAdapter messageAdapter;
-//    private RecyclerView userMessagesList;
+    private final List<Messages> messagesList = new ArrayList<>();
+    private LinearLayoutManager linearLayoutManager;
+    private MessageAdapter messageAdapter;
+    private RecyclerView userMessagesList;
 
 
     private String saveCurrentTime, saveCurrentDate;
@@ -120,11 +120,11 @@ public class ChatActivity extends AppCompatActivity
         SendFilesButton = (ImageButton) findViewById(R.id.send_files_btn);
         MessageInputText = (EditText) findViewById(R.id.input_message);
 
-//        messageAdapter = new MessageAdapter(messagesList);
-//        userMessagesList = (RecyclerView) findViewById(R.id.private_messages_list_of_users);
-//        linearLayoutManager = new LinearLayoutManager(this);
-//        userMessagesList.setLayoutManager(linearLayoutManager);
-//        userMessagesList.setAdapter(messageAdapter);
+        messageAdapter = new MessageAdapter(messagesList);
+        userMessagesList = (RecyclerView) findViewById(R.id.private_messages_list_of_users);
+        linearLayoutManager = new LinearLayoutManager(this);
+        userMessagesList.setLayoutManager(linearLayoutManager);
+        userMessagesList.setAdapter(messageAdapter);
 
 
         Calendar calendar = Calendar.getInstance();
@@ -174,46 +174,46 @@ public class ChatActivity extends AppCompatActivity
     }
 
 
-//    @Override
-//    protected void onStart()
-//    {
-//        super.onStart();
-//
-//        RootRef.child("Messages").child(messageSenderID).child(messageReceiverID)
-//                .addChildEventListener(new ChildEventListener() {
-//                    @Override
-//                    public void onChildAdded(DataSnapshot dataSnapshot, String s)
-//                    {
-//                        Messages messages = dataSnapshot.getValue(Messages.class);
-//
-//                        messagesList.add(messages);
-//
-//                        messageAdapter.notifyDataSetChanged();
-//
-//                        userMessagesList.smoothScrollToPosition(userMessagesList.getAdapter().getItemCount());
-//                    }
-//
-//                    @Override
-//                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//
-//                    }
-//                });
-//    }
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+
+        RootRef.child("Messages").child(messageSenderID).child(messageReceiverID)
+                .addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s)
+                    {
+                        Messages messages = dataSnapshot.getValue(Messages.class);
+
+                        messagesList.add(messages);
+
+                        messageAdapter.notifyDataSetChanged();
+
+                        userMessagesList.smoothScrollToPosition(userMessagesList.getAdapter().getItemCount());
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+    }
 
 
 
